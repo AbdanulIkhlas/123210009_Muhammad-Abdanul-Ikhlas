@@ -3,28 +3,40 @@ package formlogin;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
-public class FormLogin extends JFrame {
+class loginFrame extends JFrame implements ActionListener {
     // ! inisialisasi
-    private JLabel username, password, judul;
+    private final JTextField usernameAkun = new JTextField("klaz");
+    private final JPasswordField passwordAkun = new JPasswordField("123");
+    private JLabel username, password, judul, popUp;
     private JTextField inputUsername;
     private JPasswordField inputPassword;
     private JButton login, reset, logout;
-    // *-----End-------
 
-    public FormLogin(String judul) {
+    public loginFrame(String judul) {
         // ! set frame
         setTitle(judul);
         setSize(400, 230);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         setLocationRelativeTo(null);
-        // *-----End-------
 
-        component();
+        komponenLogin();
     }
 
-    public void component() {
+    public void mainFrame() {
+        JFrame frameBaru = new JFrame("Main Frame");
+
+        frameBaru.setSize(400, 230);
+        frameBaru.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frameBaru.setVisible(true);
+        frameBaru.setLocationRelativeTo(null);
+
+        komponenMain(frameBaru);
+    }
+
+    public void komponenLogin() {
         // ! instansiasi
         username = new JLabel("Username : ");
         password = new JLabel("Password  : ");
@@ -34,7 +46,10 @@ public class FormLogin extends JFrame {
         login = new JButton("LOGIN");
         reset = new JButton("RESET");
         logout = new JButton("LOG OUT");
-        // *-----End-------
+
+        // !! menangkap aksi pada button
+        login.addActionListener(this);
+        reset.addActionListener(this);
 
         // ! layouting
         judul.setBounds(160, 0, 100, 20);
@@ -53,13 +68,73 @@ public class FormLogin extends JFrame {
         add(inputPassword);
         add(login);
         add(reset);
-        // *-----End-------
-
     }
 
+    public void komponenMain(JFrame frame) {
+        // ! instansiasi
+        logout = new JButton("LOG OUT");
+        popUp = new JLabel("Berhasil Login :)");
+
+        // !! menangkap aksi pada button
+        logout.addActionListener(this);
+        logout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // ! tampilkan notifikasi berhasil logout
+                JOptionPane.showMessageDialog(frame, "Berhasil Logout");
+
+                // ! membuka frame login
+                new loginFrame("Form Login");
+
+                // ! tutup frame baru
+                frame.dispose();
+            }
+        });
+
+        // ! Layouting
+        popUp.setBounds(130, 60, 150, 20);
+        logout.setBounds(125, 90, 110, 25);
+
+        frame.setLayout(null);
+        frame.add(popUp);
+        frame.add(logout);
+    }
+
+    // ! method event handling
+    public void actionPerformed(ActionEvent buttonKlik) {
+        if (buttonKlik.getSource() == login) {
+            // ! membandingkan username dan password inisialisasi dengan user dan pass input
+            if (inputUsername.getText().equals(usernameAkun.getText())
+                    && Arrays.equals(passwordAkun.getPassword(), inputPassword.getPassword())) {
+
+                // ! menampilkan popup berhasil login
+                JOptionPane.showMessageDialog(null, "Berhasil Login :)");
+
+                // ! pindah ke frame baru
+                mainFrame();
+
+                // ! menutup frame lama
+                dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "username atau password salah");
+            }
+
+        }
+
+        if (buttonKlik.getSource() == reset) {
+            // ! reset field
+            inputUsername.setText("");
+            inputPassword.setText("");
+        }
+
+    }
+}
+
+public class FormLogin {
     public static void main(String[] args) {
         // ! memanggil frame
-        FormLogin login = new FormLogin("Login");
+        new loginFrame("Form Login");
     }
 
 }
