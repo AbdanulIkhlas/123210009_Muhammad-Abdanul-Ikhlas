@@ -4,4 +4,4 @@
 
 * [x] Membuat Form Login
 * [x] Membuat video presentasi 
-      - Video Presentasi : [Klik_Untuk_Menonton](https://youtu.be/iUy59tgehxk)
+  - Video Presentasi : [Klik_Untuk_Menonton](https://youtu.be/iUy59tgehxk)
