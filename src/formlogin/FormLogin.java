@@ -15,7 +15,7 @@ class loginFrame extends JFrame implements ActionListener {
     private JButton login, reset, logout;
 
     public loginFrame(String judul) {
-        // ! set frame
+        // ! set frame login
         setTitle(judul);
         setSize(400, 230);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -26,6 +26,7 @@ class loginFrame extends JFrame implements ActionListener {
     }
 
     public void mainFrame() {
+        // ! set frame baru setelah login
         JFrame frameBaru = new JFrame("Main Frame");
 
         frameBaru.setSize(400, 230);
@@ -33,6 +34,7 @@ class loginFrame extends JFrame implements ActionListener {
         frameBaru.setVisible(true);
         frameBaru.setLocationRelativeTo(null);
 
+        // ! menambahkan komponen ke frameBaru(frame setelah login)
         komponenMain(frameBaru);
     }
 
@@ -73,10 +75,9 @@ class loginFrame extends JFrame implements ActionListener {
     public void komponenMain(JFrame frame) {
         // ! instansiasi
         logout = new JButton("LOG OUT");
-        popUp = new JLabel("Berhasil Login :)");
+        popUp = new JLabel("Anda Telah Login");
 
-        // !! menangkap aksi pada button
-        logout.addActionListener(this);
+        // ! reaksi jika tombol logout di klik
         logout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,7 +101,8 @@ class loginFrame extends JFrame implements ActionListener {
         frame.add(logout);
     }
 
-    // ! method event handling
+    // ! rekasi ketika tombol login & reset d klik
+    @Override
     public void actionPerformed(ActionEvent buttonKlik) {
         if (buttonKlik.getSource() == login) {
             // ! membandingkan username dan password inisialisasi dengan user dan pass input
