@@ -5,16 +5,16 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
 
-class loginFrame extends JFrame implements ActionListener {
+public class FrameLogin extends JFrame implements ActionListener {
     // ! inisialisasi
     private final JTextField usernameAkun = new JTextField("klaz");
     private final JPasswordField passwordAkun = new JPasswordField("123");
-    private JLabel username, password, judul, popUp;
+    private JLabel username, password, judul;
     private JTextField inputUsername;
     private JPasswordField inputPassword;
-    private JButton login, reset, logout;
+    private JButton login, reset;
 
-    public loginFrame(String judul) {
+    public FrameLogin(String judul) {
         // ! set frame login
         setTitle(judul);
         setSize(400, 230);
@@ -23,19 +23,6 @@ class loginFrame extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
 
         komponenLogin();
-    }
-
-    public void mainFrame() {
-        // ! set frame baru setelah login
-        JFrame frameBaru = new JFrame("Main Frame");
-
-        frameBaru.setSize(400, 230);
-        frameBaru.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frameBaru.setVisible(true);
-        frameBaru.setLocationRelativeTo(null);
-
-        // ! menambahkan komponen ke frameBaru(frame setelah login)
-        komponenMain(frameBaru);
     }
 
     public void komponenLogin() {
@@ -47,7 +34,6 @@ class loginFrame extends JFrame implements ActionListener {
         inputPassword = new JPasswordField();
         login = new JButton("LOGIN");
         reset = new JButton("RESET");
-        logout = new JButton("LOG OUT");
 
         // !! menangkap aksi pada button
         login.addActionListener(this);
@@ -72,35 +58,6 @@ class loginFrame extends JFrame implements ActionListener {
         add(reset);
     }
 
-    public void komponenMain(JFrame frame) {
-        // ! instansiasi
-        logout = new JButton("LOG OUT");
-        popUp = new JLabel("Anda Telah Login");
-
-        // ! reaksi jika tombol logout di klik
-        logout.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // ! tampilkan notifikasi berhasil logout
-                JOptionPane.showMessageDialog(frame, "Berhasil Logout");
-
-                // ! membuka frame login
-                new loginFrame("Form Login");
-
-                // ! tutup frame baru
-                frame.dispose();
-            }
-        });
-
-        // ! Layouting
-        popUp.setBounds(130, 60, 150, 20);
-        logout.setBounds(125, 90, 110, 25);
-
-        frame.setLayout(null);
-        frame.add(popUp);
-        frame.add(logout);
-    }
-
     // ! rekasi ketika tombol login & reset d klik
     @Override
     public void actionPerformed(ActionEvent buttonKlik) {
@@ -113,7 +70,7 @@ class loginFrame extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Berhasil Login :)");
 
                 // ! pindah ke frame baru
-                mainFrame();
+                new FrameKedua();
 
                 // ! menutup frame lama
                 dispose();
@@ -131,12 +88,4 @@ class loginFrame extends JFrame implements ActionListener {
         }
 
     }
-}
-
-public class FormLogin {
-    public static void main(String[] args) {
-        // ! memanggil frame
-        new loginFrame("Form Login");
-    }
-
 }
